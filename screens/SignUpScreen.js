@@ -1,51 +1,48 @@
-import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 
+import ImageViewer from "../components/ImageLogo";
 
-import ImageViewer from '../components/ImageLogo';
+const placeholderImage = require("../assets/PreFur.png");
 
-const placeholderImage = require ("../assets/PreFur.png")
-
-export default function SignUpScreen({navigation}) {
+export default function SignUpScreen({ navigation }) {
   return (
     <View style={styles.container}>
-
       <StatusBar style="auto" />
 
       <View>
         <ImageViewer placeholderImageSource={placeholderImage}></ImageViewer>
       </View>
 
-      <Text style = {styles.nameAppContainer}>PreFur</Text>
+      <Text style={styles.nameAppContainer}>PreFur</Text>
 
-      <View style = {styles.credentialContainer}>
-        <TextInput placeholder = 'Enter A Valid Email' />
+      <View style={styles.credentialContainer}>
+        <TextInput placeholder="Enter A Valid Email" />
       </View>
 
-      <View style = {styles.credentialContainer}>
-        <TextInput placeholder = 'Enter Username' />
+      <View style={styles.credentialContainer}>
+        <TextInput placeholder="Enter Username" />
       </View>
 
-      <View style = {styles.credentialContainer}>
-        <TextInput placeholder = 'Enter Password' />
+      <View style={styles.credentialContainer}>
+        <TextInput placeholder="Enter Password" />
       </View>
 
-      <View style = {styles.credentialContainer}>
-        <TextInput placeholder = 'Re-Enter Password' />
+      <View style={styles.credentialContainer}>
+        <TextInput placeholder="Re-Enter Password" />
       </View>
 
       <View>
         <View>
-          <View style = {styles.loginButton}>
-            <Button title = 'DONE'
-            color = '#135D66'
-	    onPress={() => navigation.navigate('Login')}
+          <View style={styles.loginButton}>
+            <Button
+              title="DONE"
+              color="#135D66"
+              onPress={() => navigation.navigate("Login")}
             />
           </View>
-          
         </View>
       </View>
-
     </View>
   );
 }
@@ -53,9 +50,9 @@ export default function SignUpScreen({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#77B0AA',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#77B0AA",
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   imageLogoContainer: {
@@ -65,12 +62,12 @@ const styles = StyleSheet.create({
 
   nameAppContainer: {
     fontSize: 40,
-    fontStyle: 'Roboto',
+    fontStyle: "Roboto",
     marginBottom: 30,
   },
 
   buttonContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginTop: 20,
   },
 
@@ -84,12 +81,12 @@ const styles = StyleSheet.create({
 
   credentialContainer: {
     padding: 8,
-    marginWidth: '100',
+    marginWidth: "100",
     borderWidth: 3,
     borderRadius: 10,
-    width: '40%',
+    width: "40%",
     marginBottom: 5,
-    borderColor: '#003C43',
-    backgroundColor: '#E3FEF7',
+    borderColor: "#003C43",
+    backgroundColor: "#E3FEF7",
   },
 });
