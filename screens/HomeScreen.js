@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { Octicons } from '@expo/vector-icons';
+import { Octicons } from "@expo/vector-icons";
 
 export default function HomeScreen() {
   return (
@@ -14,7 +14,6 @@ export default function HomeScreen() {
           This is the content section of the homepage. You can add your content
           here.
         </Text>
-        <Octicons name="home" size={24} color="black" />
       </View>
 
       <View style={styles.footer}>
