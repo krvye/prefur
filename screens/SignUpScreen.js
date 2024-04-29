@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
 
   nameAppContainer: {
     fontSize: 40,
-    fontStyle: "Roboto",
+    // fontStyle: "Roboto",
     marginBottom: 30,
   },
 

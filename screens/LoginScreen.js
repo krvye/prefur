@@ -30,7 +30,7 @@ export default function LoginScreen({ navigation }) {
             <Button
               title="LOGIN"
               color="#135D66"
-              onPress={() => navigation.navigate("Home")}
+              onPress={() => navigation.navigate("TabNavigation")}
             />
           </View>
 
