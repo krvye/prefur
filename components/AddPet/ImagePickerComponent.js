@@ -2,7 +2,6 @@ import React from "react";
 import { TouchableOpacity, Image, StyleSheet, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-import { uploadImage } from "../../services/firebase/AddPet/storePetImage";
 
 export default function ImagePickerComponent({ dispatch, image, setImage }) {
   const pickImage = async () => {
@@ -13,12 +12,19 @@ export default function ImagePickerComponent({ dispatch, image, setImage }) {
       quality: 1,
     });
 
-    console.log(result);
-
-    if (!result.cancelled) {
-      setImage(result.assets[0].uri);
-      uploadImage(result.assets[0].uri, dispatch);
+    if (result.cancelled) {
+      console.log("Image selection cancelled.");
+      // You can handle the cancellation here, such as showing a message to the user.
+      return;
     }
+
+    if (!result.assets || result.assets.length === 0 || !result.assets[0].uri) {
+      console.log("No image selected.");
+      // You can handle the case where no image was selected.
+      return;
+    }
+
+    setImage(result.assets[0].uri);
   };
 
   return (

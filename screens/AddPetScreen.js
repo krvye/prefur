@@ -4,6 +4,7 @@ import { StyleSheet, KeyboardAvoidingView, Platform } from "react-native";
 import Form from "../components/AddPet/Form";
 import ImagePickerComponent from "../components/AddPet/ImagePickerComponent";
 import storePetInformation from "../services/firebase/AddPet/storePetInformation";
+import ProgressBar from "../components/AddPet/ProgressBar";
 import { usePetId } from "../services/firebase/AddPet/retrievePetId";
 
 // Define initial state
@@ -13,6 +14,7 @@ const initialState = {
   breed: "",
   location: "",
   contact: "",
+  imageURL: "",
 };
 
 // Define reducer function
@@ -39,12 +41,24 @@ export default function AddPetScreen() {
   // State Management
   const [state, dispatch] = useReducer(reducer, initialState);
   const [image, setImage] = useState(null);
+  const [progressState, setProgressState] = useState(false);
+  const [progress, setProgress] = useState(0);
   const petId = usePetId();
+
+  console.log(progress);
 
   // Event Handlers
 
   const handleAddPetButton = () =>
-    storePetInformation(state, dispatch, petId, setImage);
+    storePetInformation(
+      state,
+      dispatch,
+      petId,
+      image,
+      setImage,
+      setProgressState,
+      setProgress
+    );
 
   return (
     <KeyboardAvoidingView
@@ -56,6 +70,12 @@ export default function AddPetScreen() {
         dispatch={dispatch}
         image={image}
         setImage={setImage}
+      />
+      <ProgressBar
+        progressBarState={progressState}
+        image={image}
+        petName={state.petName}
+        progress={progress}
       />
       <Form
         state={state}
