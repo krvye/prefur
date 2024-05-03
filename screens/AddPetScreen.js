@@ -75,7 +75,7 @@ export default function AddPetScreen() {
         progressBarState={progressState}
         image={image}
         petName={state.petName}
-        progress={progress}
+        progress={progress * 2.3}
       />
       <Form
         state={state}
