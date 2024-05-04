@@ -6,6 +6,7 @@ import ImagePickerComponent from "../components/AddPet/ImagePickerComponent";
 import storePetInformation from "../services/firebase/AddPet/storePetInformation";
 import ProgressBar from "../components/AddPet/ProgressBar";
 import { usePetId } from "../services/firebase/AddPet/retrievePetId";
+import CustomAlertModal from "../components/AddPet/CustomAlertModal";
 
 // Define initial state
 const initialState = {
@@ -42,6 +43,7 @@ export default function AddPetScreen() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [image, setImage] = useState(null);
   const [progressState, setProgressState] = useState(false);
+  const [modalState, setModalState] = useState(false);
   const [progress, setProgress] = useState(0);
   const petId = usePetId();
 
@@ -57,7 +59,8 @@ export default function AddPetScreen() {
       image,
       setImage,
       setProgressState,
-      setProgress
+      setProgress,
+      setModalState
     );
 
   return (
@@ -71,6 +74,7 @@ export default function AddPetScreen() {
         image={image}
         setImage={setImage}
       />
+      <CustomAlertModal modalState={modalState} setModalState={setModalState} />
       <ProgressBar
         progressBarState={progressState}
         image={image}

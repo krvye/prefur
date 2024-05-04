@@ -2,6 +2,8 @@ import { Alert } from "react-native";
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 import app from "../firebaseConfig";
 import { uploadImage } from "./storePetImage";
+import { useState } from "react";
+import CustomAlertModal from "../../../components/AddPet/CustomAlertModal";
 
 const storePetInformation = async (
   state,
@@ -10,11 +12,12 @@ const storePetInformation = async (
   image,
   setImage,
   setProgressState,
-  setProgress
+  setProgress,
+  setModalState
 ) => {
   const db = getFirestore(app);
   const PET_INFORMATION_COLLECTION = collection(db, "PET_INFORMATION");
-  uploadImage(image, dispatch, setProgressState, setProgress);
+
   if (
     state.petName === "" ||
     state.color === "" ||
@@ -23,8 +26,9 @@ const storePetInformation = async (
     state.contact === "" ||
     image === null
   ) {
-    Alert.alert("Please fill all the fields");
+    setModalState(true);
   } else {
+    uploadImage(image, dispatch, setProgressState, setProgress);
     await addDoc(PET_INFORMATION_COLLECTION, {
       timestamp: Date.now(),
       userId: "UID0001",
