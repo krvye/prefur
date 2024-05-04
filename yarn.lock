@@ -3644,6 +3644,7 @@ __metadata:
     expo-font: "npm:~11.10.3"
     expo-image-picker: "npm:~14.7.1"
     expo-status-bar: "npm:~1.11.1"
+    expo-system-ui: "npm:~2.9.4"
     firebase: "npm:^10.11.1"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
@@ -5509,6 +5510,18 @@ __metadata:
   version: 1.11.1
   resolution: "expo-status-bar@npm:1.11.1"
   checksum: 10c0/2566beeb69c0c58ae189d124822139d53f8cd01cdaba2ae1ed0622d87868edb82479f7b15e2f3617da7a36e2b7c3e83dafb6ee15b49f6dab06d0e4bb0158b57e
+  languageName: node
+  linkType: hard
+
+"expo-system-ui@npm:~2.9.4":
+  version: 2.9.4
+  resolution: "expo-system-ui@npm:2.9.4"
+  dependencies:
+    "@react-native/normalize-color": "npm:^2.0.0"
+    debug: "npm:^4.3.2"
+  peerDependencies:
+    expo: "*"
+  checksum: 10c0/a5e54078acb3e1d7133962ad047d2483798175d42ca0baf6c47d14558239af6fb30d4344b47cfbf1dbba383bc0c6dc2d8976f4a7a0d4a113608ae3942cf80a04
   languageName: node
   linkType: hard
 

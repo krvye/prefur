@@ -1,5 +1,11 @@
 import React from "react";
-import { TouchableOpacity, Image, StyleSheet, View } from "react-native";
+import {
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  View,
+  useColorScheme,
+} from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
@@ -27,6 +33,13 @@ export default function ImagePickerComponent({ dispatch, image, setImage }) {
     setImage(result.assets[0].uri);
   };
 
+  const colorScheme = useColorScheme();
+  const themeIconColor = colorScheme === "light" ? "black" : "white";
+  const themeBorderColor =
+    colorScheme === "light"
+      ? { borderColor: "black" }
+      : { borderColor: "white" };
+
   return (
     <View style={styles.imagePickerContainer}>
       {image ? (
@@ -34,11 +47,14 @@ export default function ImagePickerComponent({ dispatch, image, setImage }) {
           <Image source={{ uri: image }} style={styles.image} />
         </TouchableOpacity>
       ) : (
-        <TouchableOpacity style={styles.imagePicker} onPress={pickImage}>
+        <TouchableOpacity
+          style={[styles.imagePicker, themeBorderColor]}
+          onPress={pickImage}
+        >
           <MaterialCommunityIcons
             name="camera-plus-outline"
             size={50}
-            color="black"
+            color={themeIconColor}
           />
         </TouchableOpacity>
       )}

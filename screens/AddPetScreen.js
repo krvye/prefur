@@ -1,6 +1,11 @@
 // ImagePickerExample.js
 import React, { useReducer, useState } from "react";
-import { StyleSheet, KeyboardAvoidingView, Platform } from "react-native";
+import {
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
+  useColorScheme,
+} from "react-native";
 import Form from "../components/AddPet/Form";
 import ImagePickerComponent from "../components/AddPet/ImagePickerComponent";
 import storePetInformation from "../services/firebase/AddPet/storePetInformation";
@@ -39,6 +44,13 @@ const reducer = (state, action) => {
 };
 
 export default function AddPetScreen() {
+  const colorScheme = useColorScheme();
+  const themeBackgroundColor =
+    colorScheme === "light"
+      ? { backgroundColor: "#FAF9F6" }
+      : { backgroundColor: "#122129" };
+  const themeTextColor = colorScheme === "light" ? "#122129" : "#FAF9F6";
+
   // State Management
   const [state, dispatch] = useReducer(reducer, initialState);
   const [image, setImage] = useState(null);
@@ -46,8 +58,6 @@ export default function AddPetScreen() {
   const [modalState, setModalState] = useState(false);
   const [progress, setProgress] = useState(0);
   const petId = usePetId();
-
-  console.log(progress);
 
   // Event Handlers
 
@@ -65,9 +75,9 @@ export default function AddPetScreen() {
 
   return (
     <KeyboardAvoidingView
-      style={styles.container}
+      style={[styles.container, themeBackgroundColor]}
       behavior={Platform.OS === "android" ? "height" : "padding"}
-      keyboardVerticalOffset={Platform.OS === "android" ? 100 : 0}
+      // keyboardVerticalOffset={Platform.OS === "android" ? 100 : 0}
     >
       <ImagePickerComponent
         dispatch={dispatch}
@@ -94,6 +104,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    backgroundColor: "#FAF9F6",
   },
 });

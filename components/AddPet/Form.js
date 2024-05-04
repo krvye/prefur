@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  useColorScheme,
 } from "react-native";
 import {
   MaterialIcons,
@@ -15,54 +16,67 @@ import {
 } from "@expo/vector-icons";
 
 export default function Form({ state, dispatch, handleAddPetButton }) {
+  const colorScheme = useColorScheme();
+  const themeTextColor =
+    colorScheme === "light" ? { color: "black" } : { color: "white" };
+  const themeIconColor = colorScheme === "light" ? "black" : "white";
+  const themeBorderColor =
+    colorScheme === "light"
+      ? { borderColor: "black" }
+      : { borderColor: "white" };
   return (
     <View style={styles.formContainer}>
-      <Text style={styles.textInputLabel}>Pet Name</Text>
+      <Text style={[styles.textInputLabel, themeTextColor]}>Pet Name</Text>
       <View style={styles.textInputContainer}>
-        <MaterialIcons name="pets" size={24} color="black" />
+        <MaterialIcons name="pets" size={24} color={themeIconColor} />
         <TextInput
-          style={styles.textInput}
+          style={[styles.textInput, themeBorderColor]}
           placeholder="Enter your pet name"
+          placeholderTextColor={themeIconColor}
           value={state.petName}
           onChangeText={(e) => dispatch({ type: "SET_PET_NAME", payload: e })}
         />
       </View>
-      <Text style={styles.textInputLabel}>Color</Text>
+      <Text style={[styles.textInputLabel, themeTextColor]}>Color</Text>
       <View style={styles.textInputContainer}>
-        <MaterialIcons name="invert-colors" size={24} color="black" />
+        <MaterialIcons name="invert-colors" size={24} color={themeIconColor} />
         <TextInput
-          style={styles.textInput}
+          style={[styles.textInput, themeBorderColor]}
           placeholder="Enter your pet color"
+          placeholderTextColor={themeIconColor}
           value={state.color}
           onChangeText={(e) => dispatch({ type: "SET_COLOR", payload: e })}
         />
       </View>
-      <Text style={styles.textInputLabel}>Breed</Text>
+      <Text style={[styles.textInputLabel, themeTextColor]}>Breed</Text>
       <View style={styles.textInputContainer}>
-        <MaterialCommunityIcons name="heart" size={24} color="black" />
+        <MaterialCommunityIcons name="heart" size={24} color={themeIconColor} />
         <TextInput
-          style={styles.textInput}
+          style={[styles.textInput, themeBorderColor]}
           placeholder="Enter your pet breed"
+          placeholderTextColor={themeIconColor}
           value={state.breed}
           onChangeText={(e) => dispatch({ type: "SET_BREED", payload: e })}
         />
       </View>
-      <Text style={styles.textInputLabel}>Location</Text>
+      <Text style={[styles.textInputLabel, themeTextColor]}>Location</Text>
       <View style={styles.textInputContainer}>
-        <Entypo name="location-pin" size={24} color="black" />
+        <Entypo name="location-pin" size={24} color={themeIconColor} />
         <TextInput
-          style={styles.textInput}
+          style={[styles.textInput, themeBorderColor]}
           placeholder="Enter your pet location"
+          placeholderTextColor={themeIconColor}
           value={state.location}
           onChangeText={(e) => dispatch({ type: "SET_LOCATION", payload: e })}
         />
       </View>
-      <Text style={styles.textInputLabel}>Contact</Text>
+      <Text style={[styles.textInputLabel, themeTextColor]}>Contact</Text>
       <View style={styles.textInputContainer}>
-        <Feather name="phone" size={24} color="black" />
+        <Feather name="phone" size={24} color={themeIconColor} />
         <TextInput
-          style={styles.textInput}
+          style={[styles.textInput, themeBorderColor]}
           placeholder="Enter your contact number"
+          placeholderTextColor={themeIconColor}
           value={state.contact}
           onChangeText={(e) => dispatch({ type: "SET_CONTACT", payload: e })}
         />
