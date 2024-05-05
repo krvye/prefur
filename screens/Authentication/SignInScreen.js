@@ -1,9 +1,16 @@
-import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, useColorScheme } from 'react-native'
 import React, { useState } from "react";
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 
 export default function SignInScreen() {
+  const colorScheme = useColorScheme();
+  const themeBackgroundColor =
+    colorScheme === "light"
+      ? { backgroundColor: "#FAF9F6" }
+      : { backgroundColor: "#122129" };
+  const themeTextColor = colorScheme === "light" ? "#122129" : "#FAF9F6";
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -17,7 +24,9 @@ export default function SignInScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[styles.container, themeBackgroundColor]}
+    >
       <View style={styles.backBtn}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <MaterialIcons name="arrow-back-ios" size={30} color="black" />
@@ -52,24 +61,6 @@ export default function SignInScreen() {
           />
         </View>
       </View>
-      {/* {invalidCredentials && (
-        <Text style={styles.wrongCredentials}>
-          The email and password did not match our records. Please double-check.
-        </Text>
-      )}
-      {changeDefaultPassword && (
-        <Text style={styles.wrongCredentials}>
-          Please update your password as instructed in your email.
-        </Text>
-      )}
-      {checkEmploymentStatus && (
-        <Text style={styles.wrongCredentials}>
-          Sorry, you are not an active employee.
-        </Text>
-      )}
-      {emptyInputFields && (
-        <Text style={styles.wrongCredentials}>Fields can't be empty.</Text>
-      )} */}
       <TouchableOpacity style={styles.button} onPress={handleSignIn}>
         <Text style={styles.buttonText}>Sign in</Text>
       </TouchableOpacity>
@@ -92,7 +83,7 @@ const styles = StyleSheet.create({
     top: 80,
   },
   header: {
-    marginTop: 140,
+    marginTop: 110,
     marginLeft: 35,
     marginRight: 35,
   },
@@ -162,6 +153,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   button: {
+    marginTop: 50,
     height: 40,
     width: 280,
     backgroundColor: "#003C43",

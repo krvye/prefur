@@ -5,7 +5,7 @@ import ImageViewer from "../components/ImageLogo";
 
 const placeholderImage = require("../assets/PreFur.png");
 
-export default function LoginScreen({ navigation }) {
+export default function SignUpScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -17,28 +17,28 @@ export default function LoginScreen({ navigation }) {
       <Text style={styles.nameAppContainer}>PreFur</Text>
 
       <View style={styles.credentialContainer}>
-        <TextInput placeholder="Enter Your Username" />
+        <TextInput placeholder="Enter A Valid Email" />
       </View>
 
       <View style={styles.credentialContainer}>
-        <TextInput placeholder="Enter Your Password" />
+        <TextInput placeholder="Enter Username" />
+      </View>
+
+      <View style={styles.credentialContainer}>
+        <TextInput placeholder="Enter Password" />
+      </View>
+
+      <View style={styles.credentialContainer}>
+        <TextInput placeholder="Re-Enter Password" />
       </View>
 
       <View>
-        <View style={styles.buttonContainer}>
+        <View>
           <View style={styles.loginButton}>
             <Button
-              title="LOGIN"
+              title="DONE"
               color="#135D66"
-              onPress={() => navigation.navigate("TabNavigation")}
-            />
-          </View>
-
-          <View style={styles.signInButton}>
-            <Button
-              title="SIGN UP"
-              color="#135D66"
-              onPress={() => navigation.navigate("Sign Up")}
+              onPress={() => navigation.navigate("Login")}
             />
           </View>
         </View>
@@ -90,3 +90,4 @@ const styles = StyleSheet.create({
     backgroundColor: "#E3FEF7",
   },
 });
+
