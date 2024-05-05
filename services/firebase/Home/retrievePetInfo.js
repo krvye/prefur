@@ -16,6 +16,7 @@ export const PetInformation = () => {
         petInfoData.push({ doc_id: doc.id, ...doc.data()});
       });;
       setPetInfo(petInfoData); 
+      console.log("Pet Information: ", petInfoData);
     });
 
     return () => subscribePetInfo();
