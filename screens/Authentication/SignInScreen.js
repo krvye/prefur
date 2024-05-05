@@ -32,7 +32,7 @@ export default function SignInScreen() {
 
     signInAccount(email, password)
       .then((uid) => {
-        navigation.navigate("Home");
+        navigation.navigate("HomeTab");
       })
       .catch((error) => {
         setEmptyInputFields(false);

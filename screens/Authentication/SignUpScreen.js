@@ -31,7 +31,7 @@ export default function SignInScreen() {
 
     signUpAccount(email, password, firstName, lastName)
       .then((uid) => {
-        navigation.navigate("Home");
+        navigation.navigate("HomeTab");
       })
       .catch((error) => {
       });
