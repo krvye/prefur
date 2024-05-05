@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   useColorScheme,
+  Image,
 } from "react-native";
 import {
   MaterialIcons,
@@ -14,6 +15,8 @@ import {
   Entypo,
   Feather,
 } from "@expo/vector-icons";
+import DogIcon from "../../assets/dogIcon.png";
+import CatIcon from "../../assets/catIcon.png";
 
 export default function Form({ state, dispatch, handleAddPetButton }) {
   const colorScheme = useColorScheme();
@@ -24,8 +27,40 @@ export default function Form({ state, dispatch, handleAddPetButton }) {
     colorScheme === "light"
       ? { borderColor: "black" }
       : { borderColor: "white" };
+
+  const handleSelectPet = (petType) => {
+    dispatch({ type: "SET_PET_TYPE", payload: petType });
+  };
+  const activeDogButton =
+    state.petType === "Dog"
+      ? { backgroundColor: "#003C43" }
+      : { backgroundColor: "#135D66" };
+  const activeCatButton =
+    state.petType === "Cat"
+      ? { backgroundColor: "#003C43" }
+      : { backgroundColor: "#135D66" };
   return (
     <View style={styles.formContainer}>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={[styles.petButton, activeDogButton]}
+          onPress={() => handleSelectPet("Dog")}
+        >
+          <View style={styles.insideButtonContainer}>
+            <Image source={DogIcon} style={styles.petIcon} />
+            <Text style={styles.petText}>Dog</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.petButton, activeCatButton]}
+          onPress={() => handleSelectPet("Cat")}
+        >
+          <View style={styles.insideButtonContainer}>
+            <Image source={CatIcon} style={styles.petIcon} />
+            <Text style={styles.petText}>Cat</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
       <Text style={[styles.textInputLabel, themeTextColor]}>Pet Name</Text>
       <View style={styles.textInputContainer}>
         <MaterialIcons name="pets" size={24} color={themeIconColor} />
@@ -95,6 +130,31 @@ export default function Form({ state, dispatch, handleAddPetButton }) {
 const styles = StyleSheet.create({
   formContainer: {
     alignItems: "center",
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: "5%",
+    gap: 25,
+  },
+  insideButtonContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  petButton: {
+    width: "40%",
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 5,
+  },
+  petIcon: {
+    height: 25,
+    width: 25,
+  },
+  petText: {
+    color: "white",
   },
   textInputContainer: {
     flexDirection: "row",

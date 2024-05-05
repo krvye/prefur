@@ -1,9 +1,6 @@
-import { Alert } from "react-native";
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 import app from "../firebaseConfig";
 import { uploadImage } from "./storePetImage";
-import { useState } from "react";
-import CustomAlertModal from "../../../components/AddPet/CustomAlertModal";
 
 const storePetInformation = async (
   state,
@@ -19,6 +16,7 @@ const storePetInformation = async (
   const PET_INFORMATION_COLLECTION = collection(db, "PET_INFORMATION");
 
   if (
+    state.petType === "" ||
     state.petName === "" ||
     state.color === "" ||
     state.breed === "" ||
@@ -35,6 +33,7 @@ const storePetInformation = async (
       petId: petId,
       ...state,
     });
+    dispatch({ type: "SET_PET_TYPE", payload: "" });
     dispatch({ type: "SET_PET_NAME", payload: "" });
     dispatch({ type: "SET_COLOR", payload: "" });
     dispatch({ type: "SET_BREED", payload: "" });
