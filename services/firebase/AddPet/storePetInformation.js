@@ -1,6 +1,9 @@
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 import app from "../firebaseConfig";
 import { uploadImage } from "./storePetImage";
+import { getAuth } from "firebase/auth";
+
+const auth = getAuth(app);
 
 const storePetInformation = async (
   state,
@@ -31,8 +34,9 @@ const storePetInformation = async (
 
       await addDoc(PET_INFORMATION_COLLECTION, {
         timestamp: Date.now(),
-        userId: "UID0001",
+        userId: auth.currentUser.uid,
         petId: petId,
+        adoptionStatus: "Available",
         ...state,
       });
 
