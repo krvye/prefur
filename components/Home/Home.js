@@ -9,18 +9,19 @@ import {
   Modal,
   TouchableWithoutFeedback,
 } from "react-native";
-import { Octicons } from '@expo/vector-icons';
+import { Octicons, Fontisto } from "@expo/vector-icons";
 
 export default function Home({ petInfo }) {
   const [selectPet, setSelectedPet] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [selectedPetType, setSelectedPetType] = useState(null);
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
   };
 
-  const selectPetInfo = (index) => {
-    setSelectedPet(petInfo[index]);
+  const selectPetInfo = (pet) => {
+    setSelectedPet(pet);
     toggleModal();
   };
 
@@ -29,19 +30,83 @@ export default function Home({ petInfo }) {
     toggleModal();
   };
 
+  const filterPetType = (petType) => {
+    setSelectedPetType(petType);
+  };
+
+  const filteredPets = selectedPetType
+    ? petInfo.filter((pet) => pet.petType === selectedPetType)
+    : petInfo;
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <View style={styles.filterButton}></View>
+        <Fontisto
+          name="paw"
+          size={20}
+          color="#135D66"
+          style={{ marginTop: 2, marginLeft: 30 }}
+        />
+        <View style={styles.filterContainer}>
+          <TouchableOpacity
+            style={[
+              styles.filterButton,
+              selectedPetType === null && styles.activeFilterButton,
+            ]}
+            onPress={() => filterPetType(null)}
+          >
+            <Text
+              style={[
+                styles.filterText,
+                selectedPetType === null && styles.activeFilterText,
+              ]}
+            >
+              All
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.filterButton,
+              selectedPetType === "Dog" && styles.activeFilterButton,
+            ]}
+            onPress={() => filterPetType("Dog")}
+          >
+            <Text
+              style={[
+                styles.filterText,
+                selectedPetType === "Dog" && styles.activeFilterText,
+              ]}
+            >
+              Dogs
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.filterButton,
+              selectedPetType === "Cat" && styles.activeFilterButton,
+            ]}
+            onPress={() => filterPetType("Cat")}
+          >
+            <Text
+              style={[
+                styles.filterText,
+                selectedPetType === "Cat" && styles.activeFilterText,
+              ]}
+            >
+              Cats
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
+
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.wrapper}>
           <View style={styles.rowContainer}>
-            {petInfo.map((pet, index) => (
+            {filteredPets.map((pet, index) => (
               <TouchableOpacity
                 key={index}
                 style={styles.petContainer}
-                onPress={() => selectPetInfo(index)}
+                onPress={() => selectPetInfo(pet)}
               >
                 <Image
                   source={{ uri: pet.imageURL }}
@@ -50,9 +115,14 @@ export default function Home({ petInfo }) {
                 />
                 <View style={styles.petNameContainer}>
                   <Text style={styles.nameText}>{pet.petName}</Text>
-                  <View style = {styles.petAddressContainer}>
-                  <Octicons name = "location" size={12} color="#135D66" style={{marginRight: 4, marginTop: 2}} />
-                  <Text style={styles.nameText}>{pet.location}</Text>
+                  <View style={styles.petAddressContainer}>
+                    <Octicons
+                      name="location"
+                      size={12}
+                      color="#135D66"
+                      style={{ marginRight: 4, marginTop: 2 }}
+                    />
+                    <Text style={styles.nameText}>{pet.location}</Text>
                   </View>
                 </View>
               </TouchableOpacity>
@@ -69,28 +139,20 @@ export default function Home({ petInfo }) {
       >
         <TouchableWithoutFeedback onPress={closeModal}>
           <View style={styles.modalContainer}>
-              <View style={styles.modalContent}>
-                <Image
-                  source={{ uri: selectPet?.imageURL }}
-                  style={styles.modalPetImage}
-                  resizeMode="cover"
-                />
-                <Text style={styles.modalPetName}>{selectPet?.petName}</Text>
-                <View style={styles.modalPetInfoContainer}>
-                  <Text style={styles.modalPetInfo}>
-                    {selectPet?.color}
-                  </Text>
-                  <Text style={styles.modalPetInfo}>
-                    {selectPet?.breed}
-                  </Text>
-                  <Text style={styles.modalPetInfo}>
-                    {selectPet?.location}
-                  </Text>
-                  <Text style={styles.modalPetInfo}>
-                    {selectPet?.contact}
-                  </Text>
-                </View>
+            <View style={styles.modalContent}>
+              <Image
+                source={{ uri: selectPet?.imageURL }}
+                style={styles.modalPetImage}
+                resizeMode="cover"
+              />
+              <Text style={styles.modalPetName}>{selectPet?.petName}</Text>
+              <View style={styles.modalPetInfoContainer}>
+                <Text style={styles.modalPetInfo}>{selectPet?.color}</Text>
+                <Text style={styles.modalPetInfo}>{selectPet?.breed}</Text>
+                <Text style={styles.modalPetInfo}>{selectPet?.location}</Text>
+                <Text style={styles.modalPetInfo}>{selectPet?.contact}</Text>
               </View>
+            </View>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
@@ -103,8 +165,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    padding: 50,
+    padding: 15,
     alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
   },
   scrollContainer: {
     alignItems: "center",
@@ -162,18 +226,42 @@ const styles = StyleSheet.create({
   modalPetInfoContainer: {
     marginTop: 4,
     alignItems: "center",
-  }, 
+  },
   modalPetName: {
-    fontSize: 16, 
+    fontSize: 16,
     fontWeight: "bold",
-  }, 
+  },
   modalPetInfo: {
     fontSize: 14,
     marginBottom: 3,
   },
+  filterContainer: {
+    flexDirection: "row",
+    marginLeft: 5,
+    height: 50,
+    width: "100%",
+    alignItems: "center",
+  },
   filterButton: {
     borderColor: "#135D66",
-    height: 40, 
-    width: 20, 
-  }
+    borderWidth: 1,
+    height: 30,
+    width: 80,
+    borderRadius: 20,
+    marginLeft: 4,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  filterText: {
+    fontSize: 14,
+    alignItems: "center",
+  },
+  activeFilterButton: {
+    backgroundColor: "#135D66",
+  },
+  activeFilterText: {
+    color: "#FFFFFF",
+    fontSize: 14,
+    alignItems: "center",
+  },
 });
