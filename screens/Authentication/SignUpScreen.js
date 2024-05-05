@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput, useColorScheme } f
 import React, { useState } from "react";
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
+import signUpAccount from '../../services/firebase/Authentication/signUpAccount';
 
 export default function SignInScreen() {
   const colorScheme = useColorScheme();
@@ -14,16 +15,28 @@ export default function SignInScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
-  const [lasttName, setLastName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
   const navigation = useNavigation();
+  const [emptyInputFields, setEmptyInputFields] = useState(false);
 
-  handleSignUp = () => {
-    navigation.navigate("Home");
+  const handleSignUp = () => {
+    if (!email || !password || !firstName || !lastName) {
+      setEmptyInputFields(true);
+      return;
+    }
+
+    signUpAccount(email, password, firstName, lastName)
+      .then((uid) => {
+        navigation.navigate("Home");
+      })
+      .catch((error) => {
+      });
   };
+  
 
   return (
     <View
@@ -76,6 +89,11 @@ export default function SignInScreen() {
           />
         </View>
       </View>
+
+      {emptyInputFields && (
+        <Text style={styles.wrongCredentials}>Fields can't be empty.</Text>
+      )}
+      
       <TouchableOpacity style={styles.button} onPress={handleSignUp}>
         <Text style={styles.buttonText}>Sign up</Text>
       </TouchableOpacity>
@@ -156,6 +174,13 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     marginHorizontal: 35,
   },
+  wrongCredentials: {
+    color: "#F43636",
+    fontSize: 12,
+    marginLeft: 40,
+    marginTop: 5,
+    fontWeight: "500",
+  },
   footer: {
     flexDirection: "row",
     alignItems: "center",
@@ -168,7 +193,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   button: {
-    marginTop: 30,
+    marginTop: 28,
     height: 40,
     width: 280,
     backgroundColor: "#003C43",

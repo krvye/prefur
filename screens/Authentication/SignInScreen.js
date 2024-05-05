@@ -1,7 +1,8 @@
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, useColorScheme } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, useColorScheme } from 'react-native';
 import React, { useState } from "react";
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
+import signInAccount from '../../services/firebase/Authentication/signInAccount';
 
 export default function SignInScreen() {
   const colorScheme = useColorScheme();
@@ -14,19 +15,33 @@ export default function SignInScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [emptyInputFields, setEmptyInputFields] = useState(false);
+  const [invalidCredentials, setInvalidCredentials] = useState(false);
+  const navigation = useNavigation();
+
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
-  const navigation = useNavigation();
 
-  handleSignIn = () => {
-    navigation.navigate("Home");
+  const handleSignIn = () => {
+    if (!email || !password) {
+      setEmptyInputFields(true);
+      setInvalidCredentials(false);
+      return;
+    }
+
+    signInAccount(email, password)
+      .then((uid) => {
+        navigation.navigate("Home");
+      })
+      .catch((error) => {
+        setEmptyInputFields(false);
+        setInvalidCredentials(true);
+      });
   };
 
   return (
-    <View
-      style={[styles.container, themeBackgroundColor]}
-    >
+    <View style={[styles.container, themeBackgroundColor]}>
       <View style={styles.backBtn}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <MaterialIcons name="arrow-back-ios" size={30} color="black" />
@@ -61,6 +76,16 @@ export default function SignInScreen() {
           />
         </View>
       </View>
+
+      {invalidCredentials && (
+        <Text style={styles.wrongCredentials}>
+          The email and password did not match our records. Please double-check.
+        </Text>
+      )}
+      {emptyInputFields && (
+        <Text style={styles.wrongCredentials}>Fields can't be empty.</Text>
+      )}
+
       <TouchableOpacity style={styles.button} onPress={handleSignIn}>
         <Text style={styles.buttonText}>Sign in</Text>
       </TouchableOpacity>
