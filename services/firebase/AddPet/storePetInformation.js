@@ -26,13 +26,23 @@ const storePetInformation = async (
   ) {
     setModalState(true);
   } else {
-    uploadImage(image, dispatch, setProgressState, setProgress);
+    await new Promise((resolve, reject) => {
+      uploadImage(image, dispatch, setProgressState, setProgress)
+        .then(() => {
+          resolve();
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+
     await addDoc(PET_INFORMATION_COLLECTION, {
       timestamp: Date.now(),
       userId: "UID0001",
       petId: petId,
       ...state,
     });
+    
     dispatch({ type: "SET_PET_TYPE", payload: "" });
     dispatch({ type: "SET_PET_NAME", payload: "" });
     dispatch({ type: "SET_COLOR", payload: "" });
