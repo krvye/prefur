@@ -115,6 +115,5 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     marginTop: "5%",
-    // marginBottom: "50%",
   },
 });

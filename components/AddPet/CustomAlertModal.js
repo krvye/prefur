@@ -19,13 +19,14 @@ export default function CustomAlertModal({ modalState, setModalState }) {
 const styles = StyleSheet.create({
   container: {
     alignSelf: "center",
-    backgroundColor: "#EDEADE",
+    backgroundColor: "#FAF9F6",
     height: "20%",
     width: "70%",
     marginTop: "70%",
     borderRadius: 15,
     alignItems: "center",
     justifyContent: "center",
+    elevation: 20,
   },
   errorText: {
     fontSize: 20,

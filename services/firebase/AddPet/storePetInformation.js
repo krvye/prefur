@@ -26,31 +26,27 @@ const storePetInformation = async (
   ) {
     setModalState(true);
   } else {
-    await new Promise((resolve, reject) => {
-      uploadImage(image, dispatch, setProgressState, setProgress)
-        .then(() => {
-          resolve();
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
+    try {
+      await uploadImage(image, dispatch, setProgressState, setProgress);
 
-    await addDoc(PET_INFORMATION_COLLECTION, {
-      timestamp: Date.now(),
-      userId: "UID0001",
-      petId: petId,
-      ...state,
-    });
-    
-    dispatch({ type: "SET_PET_TYPE", payload: "" });
-    dispatch({ type: "SET_PET_NAME", payload: "" });
-    dispatch({ type: "SET_COLOR", payload: "" });
-    dispatch({ type: "SET_BREED", payload: "" });
-    dispatch({ type: "SET_LOCATION", payload: "" });
-    dispatch({ type: "SET_CONTACT", payload: "" });
-    dispatch({ type: "SET_IMAGE_URL", payload: "" });
-    setImage(null);
+      await addDoc(PET_INFORMATION_COLLECTION, {
+        timestamp: Date.now(),
+        userId: "UID0001",
+        petId: petId,
+        ...state,
+      });
+
+      dispatch({ type: "SET_PET_TYPE", payload: "" });
+      dispatch({ type: "SET_PET_NAME", payload: "" });
+      dispatch({ type: "SET_COLOR", payload: "" });
+      dispatch({ type: "SET_BREED", payload: "" });
+      dispatch({ type: "SET_LOCATION", payload: "" });
+      dispatch({ type: "SET_CONTACT", payload: "" });
+      dispatch({ type: "SET_IMAGE_URL", payload: "" });
+      setImage(null);
+    } catch (error) {
+      // Handle errors here
+    }
   }
 };
 
