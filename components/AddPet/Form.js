@@ -25,8 +25,8 @@ export default function Form({ state, dispatch, handleAddPetButton }) {
   const themeIconColor = colorScheme === "light" ? "black" : "white";
   const themeBorderColor =
     colorScheme === "light"
-      ? { borderColor: "black" }
-      : { borderColor: "white" };
+      ? { borderColor: "black", color: "black" }
+      : { borderColor: "white", color: "white" };
 
   const handleSelectPet = (petType) => {
     dispatch({ type: "SET_PET_TYPE", payload: petType });
