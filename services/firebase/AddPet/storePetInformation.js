@@ -1,9 +1,9 @@
-import { Alert } from "react-native";
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 import app from "../firebaseConfig";
 import { uploadImage } from "./storePetImage";
-import { useState } from "react";
-import CustomAlertModal from "../../../components/AddPet/CustomAlertModal";
+import { getAuth } from "firebase/auth";
+
+const auth = getAuth(app);
 
 const storePetInformation = async (
   state,
@@ -19,6 +19,7 @@ const storePetInformation = async (
   const PET_INFORMATION_COLLECTION = collection(db, "PET_INFORMATION");
 
   if (
+    state.petType === "" ||
     state.petName === "" ||
     state.color === "" ||
     state.breed === "" ||
@@ -28,20 +29,28 @@ const storePetInformation = async (
   ) {
     setModalState(true);
   } else {
-    uploadImage(image, dispatch, setProgressState, setProgress);
-    await addDoc(PET_INFORMATION_COLLECTION, {
-      timestamp: Date.now(),
-      userId: "UID0001",
-      petId: petId,
-      ...state,
-    });
-    dispatch({ type: "SET_PET_NAME", payload: "" });
-    dispatch({ type: "SET_COLOR", payload: "" });
-    dispatch({ type: "SET_BREED", payload: "" });
-    dispatch({ type: "SET_LOCATION", payload: "" });
-    dispatch({ type: "SET_CONTACT", payload: "" });
-    dispatch({ type: "SET_IMAGE_URL", payload: "" });
-    setImage(null);
+    try {
+      await uploadImage(image, dispatch, setProgressState, setProgress);
+
+      await addDoc(PET_INFORMATION_COLLECTION, {
+        timestamp: Date.now(),
+        userId: auth.currentUser.uid,
+        petId: petId,
+        adoptionStatus: "Available",
+        ...state,
+      });
+
+      dispatch({ type: "SET_PET_TYPE", payload: "" });
+      dispatch({ type: "SET_PET_NAME", payload: "" });
+      dispatch({ type: "SET_COLOR", payload: "" });
+      dispatch({ type: "SET_BREED", payload: "" });
+      dispatch({ type: "SET_LOCATION", payload: "" });
+      dispatch({ type: "SET_CONTACT", payload: "" });
+      dispatch({ type: "SET_IMAGE_URL", payload: "" });
+      setImage(null);
+    } catch (error) {
+      // Handle errors here
+    }
   }
 };
 

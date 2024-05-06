@@ -13,7 +13,7 @@ export default function RootNavigator() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Splash Screen" component={SplashScreen} />
       <Stack.Screen name="AuthenticationNavigator" component={AuthenticationNavigator} />
-      <Stack.Screen name="Home" component={TabNavigation} />
+      <Stack.Screen name="HomeTab" component={TabNavigation} />
     </Stack.Navigator>
   );
 }

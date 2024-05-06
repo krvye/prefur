@@ -37,13 +37,14 @@ export default function ProgressBar({
 const styles = StyleSheet.create({
   container: {
     alignSelf: "center",
-    backgroundColor: "#EDEADE",
+    backgroundColor: "#FAF9F6",
     height: "30%",
     width: "70%",
     marginTop: "50%",
     borderRadius: 15,
     alignItems: "center",
     justifyContent: "center",
+    elevation: 20,
   },
   progressBar: {
     marginTop: "5%",

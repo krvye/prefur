@@ -5,6 +5,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   useColorScheme,
+  ScrollView,
 } from "react-native";
 import Form from "../components/AddPet/Form";
 import ImagePickerComponent from "../components/AddPet/ImagePickerComponent";
@@ -15,6 +16,7 @@ import CustomAlertModal from "../components/AddPet/CustomAlertModal";
 
 // Define initial state
 const initialState = {
+  petType: "",
   petName: "",
   color: "",
   breed: "",
@@ -26,6 +28,8 @@ const initialState = {
 // Define reducer function
 const reducer = (state, action) => {
   switch (action.type) {
+    case "SET_PET_TYPE":
+      return { ...state, petType: action.payload };
     case "SET_PET_NAME":
       return { ...state, petName: action.payload };
     case "SET_COLOR":
@@ -77,25 +81,29 @@ export default function AddPetScreen() {
     <KeyboardAvoidingView
       style={[styles.container, themeBackgroundColor]}
       behavior={Platform.OS === "android" ? "height" : "padding"}
-      // keyboardVerticalOffset={Platform.OS === "android" ? 100 : 0}
     >
-      <ImagePickerComponent
-        dispatch={dispatch}
-        image={image}
-        setImage={setImage}
-      />
-      <CustomAlertModal modalState={modalState} setModalState={setModalState} />
-      <ProgressBar
-        progressBarState={progressState}
-        image={image}
-        petName={state.petName}
-        progress={progress * 2.3}
-      />
-      <Form
-        state={state}
-        dispatch={dispatch}
-        handleAddPetButton={handleAddPetButton}
-      />
+      <ScrollView style={styles.scrollContainer}>
+        <ImagePickerComponent
+          dispatch={dispatch}
+          image={image}
+          setImage={setImage}
+        />
+        <CustomAlertModal
+          modalState={modalState}
+          setModalState={setModalState}
+        />
+        <ProgressBar
+          progressBarState={progressState}
+          image={image}
+          petName={state.petName}
+          progress={progress * 2.3}
+        />
+        <Form
+          state={state}
+          dispatch={dispatch}
+          handleAddPetButton={handleAddPetButton}
+        />
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 }
@@ -104,5 +112,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
+  },
+  scrollContainer: {
+    marginTop: "5%",
   },
 });
