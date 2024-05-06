@@ -8,10 +8,17 @@ import {
   TouchableOpacity,
   Modal,
   TouchableWithoutFeedback,
+  useColorScheme,
 } from "react-native";
 import { Octicons, Fontisto } from "@expo/vector-icons";
 
 export default function Home({ petInfo }) {
+  const colorScheme = useColorScheme();
+  const themeTextColor = colorScheme === "light" ? { color: "black" } : { color: "white" };
+  const themeIconColor = colorScheme === "light" ? "#135D66" : "white";
+  const themeBorderColor = colorScheme === "light" ? { borderColor: "#003C43", color: "#003C43" } : { borderColor: "white", color: "white" };
+  const backgroundColor = colorScheme === "light" ? "#ffffff" : "#003C43" ; 
+
   const [selectPet, setSelectedPet] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedPetType, setSelectedPetType] = useState(null);
@@ -34,67 +41,35 @@ export default function Home({ petInfo }) {
     setSelectedPetType(petType);
   };
 
-  const filteredPets = selectedPetType
-    ? petInfo.filter((pet) => pet.petType === selectedPetType)
-    : petInfo;
+  const filteredPets = selectedPetType ? petInfo.filter((pet) => pet.petType === selectedPetType) : petInfo;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor }]}>
       <View style={styles.header}>
         <Fontisto
           name="paw"
           size={20}
-          color="#135D66"
-          style={{ marginTop: 2, marginLeft: 30 }}
+          color={themeIconColor}
+          style={{ marginTop: 1, marginLeft: 30 }}
         />
         <View style={styles.filterContainer}>
           <TouchableOpacity
-            style={[
-              styles.filterButton,
-              selectedPetType === null && styles.activeFilterButton,
-            ]}
+            style={[styles.filterButton, themeBorderColor, selectedPetType === null && styles.activeFilterButton]}
             onPress={() => filterPetType(null)}
           >
-            <Text
-              style={[
-                styles.filterText,
-                selectedPetType === null && styles.activeFilterText,
-              ]}
-            >
-              All
-            </Text>
+            <Text style={[styles.filterText, themeTextColor, selectedPetType === null && styles.activeFilterText]}>All</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[
-              styles.filterButton,
-              selectedPetType === "Dog" && styles.activeFilterButton,
-            ]}
+            style={[styles.filterButton, themeBorderColor, selectedPetType === "Dog" && styles.activeFilterButton]}
             onPress={() => filterPetType("Dog")}
           >
-            <Text
-              style={[
-                styles.filterText,
-                selectedPetType === "Dog" && styles.activeFilterText,
-              ]}
-            >
-              Dogs
-            </Text>
+            <Text style={[styles.filterText, themeTextColor, selectedPetType === "Dog" && styles.activeFilterText]}>Dogs</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[
-              styles.filterButton,
-              selectedPetType === "Cat" && styles.activeFilterButton,
-            ]}
+            style={[styles.filterButton, themeBorderColor, selectedPetType === "Cat" && styles.activeFilterButton]}
             onPress={() => filterPetType("Cat")}
           >
-            <Text
-              style={[
-                styles.filterText,
-                selectedPetType === "Cat" && styles.activeFilterText,
-              ]}
-            >
-              Cats
-            </Text>
+            <Text style={[styles.filterText, themeTextColor, selectedPetType === "Cat" && styles.activeFilterText]}>Cats</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -114,15 +89,15 @@ export default function Home({ petInfo }) {
                   resizeMode="cover"
                 />
                 <View style={styles.petNameContainer}>
-                  <Text style={styles.nameText}>{pet.petName}</Text>
+                  <Text style={[styles.nameText, themeTextColor]}>{pet.petName}</Text>
                   <View style={styles.petAddressContainer}>
                     <Octicons
                       name="location"
                       size={12}
-                      color="#135D66"
+                      color={themeIconColor}
                       style={{ marginRight: 4, marginTop: 2 }}
                     />
-                    <Text style={styles.nameText}>{pet.location}</Text>
+                    <Text style={[styles.nameText, themeTextColor]}>{pet.location}</Text>
                   </View>
                 </View>
               </TouchableOpacity>
@@ -145,12 +120,12 @@ export default function Home({ petInfo }) {
                 style={styles.modalPetImage}
                 resizeMode="cover"
               />
-              <Text style={styles.modalPetName}>{selectPet?.petName}</Text>
+              <Text style={[styles.modalPetName, themeTextColor]}>{selectPet?.petName}</Text>
               <View style={styles.modalPetInfoContainer}>
-                <Text style={styles.modalPetInfo}>{selectPet?.color}</Text>
-                <Text style={styles.modalPetInfo}>{selectPet?.breed}</Text>
-                <Text style={styles.modalPetInfo}>{selectPet?.location}</Text>
-                <Text style={styles.modalPetInfo}>{selectPet?.contact}</Text>
+                <Text style={[styles.modalPetInfo, themeTextColor]}>{selectPet?.color}</Text>
+                <Text style={[styles.modalPetInfo, themeTextColor]}>{selectPet?.breed}</Text>
+                <Text style={[styles.modalPetInfo, themeTextColor]}>{selectPet?.location}</Text>
+                <Text style={[styles.modalPetInfo, themeTextColor]}>{selectPet?.contact}</Text>
               </View>
             </View>
           </View>
@@ -169,6 +144,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
+    marginTop: 30,
   },
   scrollContainer: {
     alignItems: "center",
