@@ -1,9 +1,19 @@
-import { StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View } from "react-native";
+import UserProfile from "../components/Profile/UserProfile";
+import UserPets from "../components/Profile/UserPets";
+import { getUserInformation } from "../services/firebase/Profile/retrieveUserInfo";
+import { getUserPetInformation } from "../services/firebase/Profile/retrieveUserPets"; 
 
 export default function Profile() {
+  const userInfo = getUserInformation();
+
+  const petInfo = getUserPetInformation(); 
+
   return (
     <View style={styles.container}>
-      <Text>Profile Screen</Text>
+      <UserProfile userInfo={userInfo} />
+      <UserPets petInfo={petInfo} />
     </View>
   );
 }
@@ -11,7 +21,7 @@ export default function Profile() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#77B0AA",
+    backgroundColor: "#FAF9F6",
     alignItems: "center",
     justifyContent: "center",
   },
