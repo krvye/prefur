@@ -1,9 +1,10 @@
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from "../firebaseConfig";
 
-const signInAccount = async (email, password) => {
-  const auth = getAuth(app);
+const auth = getAuth(app);
 
+const signInAccount = async (email, password) => {
+  
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;

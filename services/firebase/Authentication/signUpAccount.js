@@ -2,9 +2,10 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { app, db } from "../firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 
-const signUpAccount = async (email, password, firstName, lastName) => {
-  const auth = getAuth(app);
+const auth = getAuth(app);
 
+const signUpAccount = async (email, password, firstName, lastName) => {
+  
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;

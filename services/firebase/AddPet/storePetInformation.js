@@ -17,6 +17,7 @@ const storePetInformation = async (
 ) => {
   const db = getFirestore(app);
   const PET_INFORMATION_COLLECTION = collection(db, "PET_INFORMATION");
+  uploadImage(image, dispatch, setProgressState, setProgress);
 
   if (
     state.petType === "" ||
@@ -30,8 +31,6 @@ const storePetInformation = async (
     setModalState(true);
   } else {
     try {
-      await uploadImage(image, dispatch, setProgressState, setProgress);
-
       await addDoc(PET_INFORMATION_COLLECTION, {
         timestamp: Date.now(),
         userId: auth.currentUser.uid,
