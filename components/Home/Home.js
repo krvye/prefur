@@ -11,7 +11,6 @@ import {
   useColorScheme,
 } from "react-native";
 import { Octicons, Fontisto } from "@expo/vector-icons";
-import { Octicons, Fontisto } from "@expo/vector-icons";
 
 export default function Home({ petInfo }) {
   const colorScheme = useColorScheme();
@@ -23,14 +22,11 @@ export default function Home({ petInfo }) {
   const [selectPet, setSelectedPet] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedPetType, setSelectedPetType] = useState(null);
-  const [selectedPetType, setSelectedPetType] = useState(null);
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
   };
 
-  const selectPetInfo = (pet) => {
-    setSelectedPet(pet);
   const selectPetInfo = (pet) => {
     setSelectedPet(pet);
     toggleModal();
@@ -78,16 +74,13 @@ export default function Home({ petInfo }) {
         </View>
       </View>
 
-
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.wrapper}>
           <View style={styles.rowContainer}>
             {filteredPets.map((pet, index) => (
-            {filteredPets.map((pet, index) => (
               <TouchableOpacity
                 key={index}
                 style={styles.petContainer}
-                onPress={() => selectPetInfo(pet)}
                 onPress={() => selectPetInfo(pet)}
               >
                 <Image
@@ -121,7 +114,7 @@ export default function Home({ petInfo }) {
       >
         <TouchableWithoutFeedback onPress={closeModal}>
           <View style={styles.modalContainer}>
-            <View style={styles.modalContent}>
+            <View style={[styles.modalContent, { backgroundColor }]}>
               <Image
                 source={{ uri: selectPet?.imageURL }}
                 style={styles.modalPetImage}
@@ -147,7 +140,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    padding: 15,
     padding: 15,
     alignItems: "center",
     justifyContent: "center",
@@ -211,12 +203,9 @@ const styles = StyleSheet.create({
     marginTop: 4,
     alignItems: "center",
   },
-  },
   modalPetName: {
     fontSize: 16,
-    fontSize: 16,
     fontWeight: "bold",
-  },
   },
   modalPetInfo: {
     fontSize: 14,
@@ -229,35 +218,8 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
   },
-  filterContainer: {
-    flexDirection: "row",
-    marginLeft: 5,
-    height: 50,
-    width: "100%",
-    alignItems: "center",
-  },
   filterButton: {
     borderColor: "#135D66",
-    borderWidth: 1,
-    height: 30,
-    width: 80,
-    borderRadius: 20,
-    marginLeft: 4,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  filterText: {
-    fontSize: 14,
-    alignItems: "center",
-  },
-  activeFilterButton: {
-    backgroundColor: "#135D66",
-  },
-  activeFilterText: {
-    color: "#FFFFFF",
-    fontSize: 14,
-    alignItems: "center",
-  },
     borderWidth: 1,
     height: 30,
     width: 80,
