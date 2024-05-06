@@ -26,7 +26,7 @@ const storePetInformation = async (
     state.breed === "" ||
     state.location === "" ||
     state.contact === "" ||
-    state.imageURL === ""
+    image === null
   ) {
     setModalState(true);
   } else {
