@@ -36,7 +36,7 @@ export default function ImagePickerComponent({
       // You can handle the case where no image was selected.
       return;
     }
-
+    console.log("Selected image URI:", result.assets[0].uri);
     setImage(result.assets[0].uri);
     uploadImage(result.assets[0].uri, dispatch, setProgressState, setProgress);
   };
