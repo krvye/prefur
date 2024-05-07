@@ -8,8 +8,15 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import { uploadImage } from "../../services/firebase/AddPet/storePetImage";
 
-export default function ImagePickerComponent({ dispatch, image, setImage }) {
+export default function ImagePickerComponent({
+  dispatch,
+  image,
+  setImage,
+  setProgressState,
+  setProgress,
+}) {
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -31,6 +38,7 @@ export default function ImagePickerComponent({ dispatch, image, setImage }) {
     }
 
     setImage(result.assets[0].uri);
+    uploadImage(result.assets[0].uri, dispatch, setProgressState, setProgress);
   };
 
   const colorScheme = useColorScheme();

@@ -11,13 +11,10 @@ const storePetInformation = async (
   petId,
   image,
   setImage,
-  setProgressState,
-  setProgress,
   setModalState
 ) => {
   const db = getFirestore(app);
   const PET_INFORMATION_COLLECTION = collection(db, "PET_INFORMATION");
-  uploadImage(image, dispatch, setProgressState, setProgress);
 
   if (
     state.petType === "" ||

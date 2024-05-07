@@ -66,16 +66,7 @@ export default function AddPetScreen() {
   // Event Handlers
 
   const handleAddPetButton = () =>
-    storePetInformation(
-      state,
-      dispatch,
-      petId,
-      image,
-      setImage,
-      setProgressState,
-      setProgress,
-      setModalState
-    );
+    storePetInformation(state, dispatch, petId, image, setImage, setModalState);
 
   return (
     <KeyboardAvoidingView
@@ -87,6 +78,8 @@ export default function AddPetScreen() {
           dispatch={dispatch}
           image={image}
           setImage={setImage}
+          setProgressState={setProgressState}
+          setProgress={setProgress}
         />
         <CustomAlertModal
           modalState={modalState}
