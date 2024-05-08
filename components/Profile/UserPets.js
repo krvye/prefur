@@ -39,7 +39,7 @@ export default function UserPets({ petInfo }) {
             </View>
           ))
         ) : (
-          <Text>No Pets Uploaded</Text>
+          <Text></Text>
         )}
       </ScrollView>
     </View>

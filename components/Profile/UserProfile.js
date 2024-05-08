@@ -91,11 +91,24 @@ export default function UserProfile({ userInfo }) {
             <>
               <View style={styles.userInfoContainer}>
                 <Text style={styles.nameText}>{userInfo[0].firstName} {userInfo[0].lastName}</Text>
-                <Text style={styles.infoText}> <Ionicons name="person" size={18} style={styles.icon} />  {userInfo[0].age} years old</Text>
-                
-                <Text style={styles.infoText}><Entypo name="location-pin" size={20} />  {userInfo[0].location}</Text>
-                <Text style={styles.infoText}> <FontAwesome name="phone" size={20} color="black" />  {userInfo[0].contact}</Text>
+                <Text style={styles.infoText}>{userInfo[0].emailAddress} </Text>
+                {userInfo[0].age ? ( 
+                  <Text style={styles.infoText}>
+                    <Ionicons name="person" size={18} style={styles.icon} />  {userInfo[0].age} years old
+                  </Text>
+                ) : null}
+                {userInfo[0].location && ( 
+                  <Text style={styles.infoText}>
+                    <Entypo name="location-pin" size={20} /> {userInfo[0].location}
+                  </Text>
+                )}
+                {userInfo[0].contact && ( 
+                  <Text style={styles.infoText}>
+                    <FontAwesome name="phone" size={20} color="black" />  {userInfo[0].contact}
+                  </Text>
+                )}
               </View>
+
             </>
           ) : (
             <Text>Loading...</Text>
@@ -114,7 +127,8 @@ export default function UserProfile({ userInfo }) {
           <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
               <Button title="Edit Profile" onPress={handleEditProfile} color="#135D66" />
-              <Button title="Log Out" onPress={LogoutButton} color="#135D66" />
+
+              <LogoutButton />
             </View>
           </View>
         </TouchableWithoutFeedback>
@@ -196,14 +210,14 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   userInfoContainer: {
-    alignItems: 'flex-start', 
+    alignItems: 'flex-start',
     marginTop: 55,
-    marginLeft: 2, 
+    marginLeft: 2,
   },
   nameText: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 4,
   },
   infoText: {
     fontSize: 14,
