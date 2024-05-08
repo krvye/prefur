@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "flex-end",
-    top: 40,
+    top: 30,
   },
   modalContent: {
     backgroundColor: "#135D66",
