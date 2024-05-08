@@ -15,6 +15,8 @@ export default function Profile() {
       <UserProfile userInfo={userInfo} />
       <UserPets petInfo={petInfo} />
     </View>
+
+    
   );
 }
 
@@ -22,7 +24,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FAF9F6",
+    height: "100%",
     alignItems: "center",
     justifyContent: "center",
+    
   },
 });
