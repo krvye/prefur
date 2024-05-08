@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   },
   errorText: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: "500",
   },
   okButton: {
     marginTop: "5%",

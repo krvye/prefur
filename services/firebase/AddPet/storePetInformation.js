@@ -2,16 +2,16 @@ import { addDoc, collection, getFirestore } from "firebase/firestore";
 import app from "../firebaseConfig";
 import { uploadImage } from "./storePetImage";
 import { getAuth } from "firebase/auth";
+import { set } from "firebase/database";
 
 const auth = getAuth(app);
 
 const storePetInformation = async (
   state,
-  dispatch,
   petId,
   image,
-  setImage,
-  setModalState
+  setModalState,
+  setAddedModalState
 ) => {
   const db = getFirestore(app);
   const PET_INFORMATION_COLLECTION = collection(db, "PET_INFORMATION");
@@ -36,14 +36,7 @@ const storePetInformation = async (
         ...state,
       });
 
-      dispatch({ type: "SET_PET_TYPE", payload: "" });
-      dispatch({ type: "SET_PET_NAME", payload: "" });
-      dispatch({ type: "SET_COLOR", payload: "" });
-      dispatch({ type: "SET_BREED", payload: "" });
-      dispatch({ type: "SET_LOCATION", payload: "" });
-      dispatch({ type: "SET_CONTACT", payload: "" });
-      dispatch({ type: "SET_IMAGE_URL", payload: "" });
-      setImage(null);
+      setAddedModalState(true);
     } catch (error) {
       // Handle errors here
     }

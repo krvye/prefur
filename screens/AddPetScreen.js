@@ -13,6 +13,8 @@ import storePetInformation from "../services/firebase/AddPet/storePetInformation
 import ProgressBar from "../components/AddPet/ProgressBar";
 import { usePetId } from "../services/firebase/AddPet/retrievePetId";
 import CustomAlertModal from "../components/AddPet/CustomAlertModal";
+import AddedSuccessfully from "../components/AddPet/AddedSuccessfully";
+import { set } from "firebase/database";
 
 // Define initial state
 const initialState = {
@@ -60,13 +62,14 @@ export default function AddPetScreen() {
   const [image, setImage] = useState(null);
   const [progressState, setProgressState] = useState(false);
   const [modalState, setModalState] = useState(false);
+  const [addedModalState, setAddedModalState] = useState(false);
   const [progress, setProgress] = useState(0);
   const petId = usePetId();
 
   // Event Handlers
 
   const handleAddPetButton = () =>
-    storePetInformation(state, dispatch, petId, image, setImage, setModalState);
+    storePetInformation(state, petId, image, setModalState, setAddedModalState);
 
   return (
     <KeyboardAvoidingView
@@ -84,6 +87,13 @@ export default function AddPetScreen() {
         <CustomAlertModal
           modalState={modalState}
           setModalState={setModalState}
+        />
+        <AddedSuccessfully
+          addedModalState={addedModalState}
+          setAddedModalState={setAddedModalState}
+          petType={state.petType}
+          dispatch={dispatch}
+          setImage={setImage}
         />
         <ProgressBar
           progressBarState={progressState}
