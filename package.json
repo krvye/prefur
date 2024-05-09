@@ -36,5 +36,5 @@
     "@babel/core": "^7.20.0"
   },
   "private": true,
-  "packageManager": "yarn@4.2.1"
+  "packageManager": "yarn@4.2.2"
 }
