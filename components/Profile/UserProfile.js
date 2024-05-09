@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useReducer } from "react";
-import { StyleSheet, Text, View, Button, Modal, TextInput, TouchableOpacity, TouchableWithoutFeedback } from "react-native";
+import { StyleSheet, Text, View, Button, Modal, TextInput, TouchableOpacity, TouchableWithoutFeedback, KeyboardAvoidingView, Dimensions, useColorScheme } from "react-native";
 import UserProfilePicker from "./UserProfilePicker";
 import ProgressBar from "../AddPet/ProgressBar";
 import { getUserImageUrl } from "../../services/firebase/Profile/retrieveUserProfile";
@@ -51,6 +51,7 @@ export default function UserProfile({ userInfo }) {
   const toggleModal = () => {
     setModalVisible(!modalVisible);
   };
+
   const handleSaveProfile = () => {
     const currentUser = auth.currentUser;
     if (!currentUser) {
@@ -62,60 +63,70 @@ export default function UserProfile({ userInfo }) {
       age: age,
       contact: contact,
       location: location,
-
     };
     storeUserInfo(uid, profileData);
     setIsEditing(false);
   };
 
+  const colorScheme = useColorScheme();
+  const themeBackgroundColor =
+    colorScheme === "light"
+      ? { backgroundColor: "#FAF9F6" }
+      : { backgroundColor: "#122129" };
+
+  const screenHeight = Dimensions.get("window").height;
+  const containerHeight = 0.4 * screenHeight;
+
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={[styles.container, { height: containerHeight }, themeBackgroundColor]} behavior="padding">
       <View style={styles.row}>
         <View style={styles.leftColumn}>
-          <UserProfilePicker
-            setUserImage={setUserImage}
-            setProgressState={setProgressState}
-            setProgress={setProgress}
-            image={imageURL}
-            dispatch={dispatch}
-          />
-          <ProgressBar
-            progressBarState={progressState}
-            image={state.imageURL}
-            petName={state.petName}
-            progress={progress * 2.3}
-          />
+          <View style={styles.imageContainer}>
+
+            <UserProfilePicker
+              setUserImage={setUserImage}
+              setProgressState={setProgressState}
+              setProgress={setProgress}
+              image={imageURL}
+              dispatch={dispatch}
+              style={styles.userProfilePicker}
+            />
+
+            <ProgressBar
+              progressBarState={progressState}
+              image={state.imageURL}
+              petName={state.petName}
+              progress={progress * 2.3}
+            />
+          </View>
         </View>
+
         <View style={styles.rightColumn}>
           {hasUserInfo ? (
-            <>
-              <View style={styles.userInfoContainer}>
-                <Text style={styles.nameText}>{userInfo[0].firstName} {userInfo[0].lastName}</Text>
-                <Text style={styles.infoText}>{userInfo[0].emailAddress} </Text>
-                {userInfo[0].age ? ( 
-                  <Text style={styles.infoText}>
-                    <Ionicons name="person" size={18} style={styles.icon} />  {userInfo[0].age} years old
-                  </Text>
-                ) : null}
-                {userInfo[0].location && ( 
-                  <Text style={styles.infoText}>
-                    <Entypo name="location-pin" size={20} /> {userInfo[0].location}
-                  </Text>
-                )}
-                {userInfo[0].contact && ( 
-                  <Text style={styles.infoText}>
-                    <FontAwesome name="phone" size={20} color="black" />  {userInfo[0].contact}
-                  </Text>
-                )}
-              </View>
-
-            </>
+            <View style={styles.userInfoContainer}>
+              <Text style={styles.nameText}>{userInfo[0].firstName} {userInfo[0].lastName}</Text>
+              <Text style={styles.infoText}>{userInfo[0].emailAddress} </Text>
+              {userInfo[0].age ? (
+                <Text style={styles.infoText}>
+                  <Ionicons name="person" size={18} style={styles.icon} />  {userInfo[0].age} years old
+                </Text>
+              ) : null}
+              {userInfo[0].location && (
+                <Text style={styles.infoText}>
+                <Entypo name="location-pin" size={20}/> {userInfo[0].location}
+                </Text>
+              )}
+              {userInfo[0].contact && (
+                <Text style={styles.infoText}>
+                  <FontAwesome name="phone" size={20} color="black" />  {userInfo[0].contact}
+                </Text>
+              )}
+            </View>
           ) : (
             <Text>Loading...</Text>
           )}
         </View>
       </View>
-
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={toggleModal} style={styles.kebabButton}>
           <Entypo name="dots-three-vertical" size={20} color="white" />
@@ -127,7 +138,6 @@ export default function UserProfile({ userInfo }) {
           <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
               <Button title="Edit Profile" onPress={handleEditProfile} color="#135D66" />
-
               <LogoutButton />
             </View>
           </View>
@@ -170,49 +180,61 @@ export default function UserProfile({ userInfo }) {
               <View style={styles.buttonCancelContainer}></View>
               <Button title="Cancel" onPress={() => setIsEditing(false)} color="#77B0AA" />
               <View style={styles.buttonSaveContainer}>
-                <Button title="Save" onPress={handleSaveProfile} color="#135D66" /></View>
+                <Button title="Save" onPress={handleSaveProfile} color="#135D66" />
+              </View>
             </View>
-
-
           </View>
         </View>
       </Modal>
-    </View>
+    </KeyboardAvoidingView>
+
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingTop: 50,
-    width: "100%",
-    position: "relative",
+    height: "40%",
+    // backgroundColor: "blue",
   },
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-start",
-    position: "absolute",
-    top: 35,
-    height: '100%',
+    // backgroundColor: "black",
+    height: "100%",
   },
   leftColumn: {
-    top: 35,
-    height: '100%',
+    position: 'relative',
     width: "55%",
+    height: "100%",
     alignItems: "center",
+    justifyContent: "center",
+    
   },
+  imageContainer: {
+
+    top: 30,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
+    // backgroundColor: "gray", 
+  },
+
   rightColumn: {
-    top: 35,
     width: "45%",
-    height: '100%',
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    // backgroundColor: "blue",
   },
   userInfoContainer: {
     alignItems: 'flex-start',
-    marginTop: 55,
-    marginLeft: 2,
+    width: "100%",
+    marginTop: "25%",
+    marginLeft: "2%",
+    // backgroundColor: "blue",
   },
   nameText: {
     fontSize: 24,
@@ -271,11 +293,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: "100%",
   },
-
   buttonSaveContainer: {
     marginLeft: 5,
   },
-
   buttonContainer: {
     position: "absolute",
     top: 0,

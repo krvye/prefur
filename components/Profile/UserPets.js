@@ -1,14 +1,19 @@
 import React from "react";
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, KeyboardAvoidingView, useColorScheme } from "react-native";
 import { MaterialIcons, Feather } from '@expo/vector-icons'; // Import Feather icon
 import handleDeletePet from "../../services/firebase/Profile/deletePet";
 
 export default function UserPets({ petInfo }) {
   const hasPetInfo = petInfo && Array.isArray(petInfo) && petInfo.length > 0;
 
-  
+  const colorScheme = useColorScheme();
+  const themeBackgroundColor =
+    colorScheme === "light"
+      ? { backgroundColor: "#FAF9F6" }
+      : { backgroundColor: "#122129" };
+
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={[styles.container, themeBackgroundColor]} behavior="padding">
       <View style={styles.header}>
         <MaterialIcons name="pets" size={27} color="#135D66" />
         <Text style={styles.headerText}>Pets</Text>
@@ -42,7 +47,7 @@ export default function UserPets({ petInfo }) {
           <Text></Text>
         )}
       </ScrollView>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -52,12 +57,13 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "flex-start",
     width: "100%",
-    minHeight: 215, 
+    minHeight: "20%",
   },
   header: {
     flexDirection: "row",
     alignItems: "flex-start",
     marginBottom: 10,
+    marginTop: 15,
     marginLeft: 15,
   },
   headerText: {
